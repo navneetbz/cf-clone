@@ -469,7 +469,8 @@ function drawLevelsChart() {
 
 function drawHeatMap() {
   const heatMapDiv = document.getElementById("heatmap");
-  // const heatMapContainerDiv = document.getElementById("heatmap-div");
+
+  const heatMapContainerDiv = document.getElementById("heatmap-container");
   // heatMapContainerDiv.style.display = "flex"
   const heatmapTable = [];
 
@@ -486,7 +487,7 @@ function drawHeatMap() {
   heatmap = new google.visualization.Calendar(heatMapDiv);
   var heatmapOptions = {
     height: years * 140 + 30,
-    width: 900,
+    width: Math.max(heatMapContainerDiv.getBoundingClientRect().width, 900),
     fontName: "Monospace",
     titleTextStyle: { color: "#212529", fontSize: "16" },
     legend: {

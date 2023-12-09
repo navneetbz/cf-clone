@@ -56,16 +56,16 @@
     align-items: center;
     padding: 1rem;
     overflow: auto;
-    width: 900px;
     margin: 0px auto;
-    box-sizing: border-box
+    box-sizing: border-box;
+    width: 70%
 }
 
 #contest-stats {
     display: flex;
     justify-content: center;
     align-items: start;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 #contest-stats>div {
@@ -100,6 +100,7 @@
 .hidden {
     display: none !important;
 }
+
 
 @media (max-width: 479px) {
     #heatmap-container {
