@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+
+.ratingchart-div, .levelschart-dev {
+    display: block;
+    height: 400px;
+    width: 80%;
+    overflow-x: auto;
+    margin: 0px auto;
+    box-sizing: border-box;
+}
+
+#lang-verd {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 300px;
+    overflow: auto;
+    width: 80%;
+    margin: 0px auto
+}
+
+
+#lang-verd>div {
+    height: 300px;
+    width: 50%;
+    overflow-x: auto;
+}
+
+#tags {
+    width: 80%;
+    overflow-x: auto;
+    margin: 0px auto
+}
+
+#heatmap-container {
+    display: block;
+    align-items: center;
+    padding: 1rem;
+    overflow: auto;
+    width: 900px;
+    margin: 0px auto;
+    box-sizing: border-box
+}
+
+#contest-stats {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 2rem;
+}
+
+#contest-stats>div {
+    width: 500px;
+}
+
+
+#unsolved-problems {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem
+}
+
+#unsolved-problems>span {
+    color: rgb(70, 131, 229)
+}
+
+#unsolved-problems-container {
+    width: 80%;
+    margin: 0px auto;
+}
+
+#loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 479px) {
+    #heatmap-container {
+        width: calc(100% - 16px);
+    }
+
+    .ratingchart-div, .levelschart-dev {
+        width: calc(100% - 16px);
+    }
+}
+
+/* .skeleton-container {
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.skeleton-line {
+    height: 15px;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #f4f4f4 25%, #e0e0e0 50%, #f4f4f4 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+} */
