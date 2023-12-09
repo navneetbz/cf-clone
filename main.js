@@ -7,7 +7,7 @@ let verdict = {};
 let language = {};
 let ratings = {};
 let heatmap = {};
-let tags = {}
+let tags = {};
 
 let tried = new Set();
 let solved = new Set();
@@ -21,17 +21,23 @@ let years = 0;
 
 async function handleSubmit(e) {
   try {
-    showLoader()
-    hideContent()
     e.preventDefault();
     const inputBox = document.getElementById("username-input");
     username = inputBox.value;
+    if (username === "") {
+      alert("username can't be empty!");
+      return;
+    }
+    showLoader();
+    hideContent();
+
+
 
     verdict = {};
     language = {};
     ratings = {};
     heatmap = {};
-    tags = {}
+    tags = {};
     tried = new Set();
     solved = new Set();
     attempts = {};
@@ -75,18 +81,14 @@ async function handleSubmit(e) {
         language[submission.programmingLanguage] += 1;
       }
 
-
       if (submission.verdict === "OK") {
         for (let tag of submission.problem.tags) {
-  
           if (tags[tag] === undefined) {
-            tags[tag] = 1
+            tags[tag] = 1;
           } else {
-            tags[tag] += 1
+            tags[tag] += 1;
           }
-  
         }
-
       }
 
       if (ratings[submission.problem.rating] === undefined) {
@@ -165,11 +167,11 @@ async function handleSubmit(e) {
     console.log(verdict);
     console.log(language);
     // console.log("heatmap => ", heatmap)
-    hideLoader()
-    showContent()
+    hideLoader();
+    showContent();
 
-    const targetDiv = document.querySelector('#lang-verd');
-    targetDiv.scrollIntoView({ behavior: 'smooth' });
+    const targetDiv = document.querySelector("#lang-verd");
+    targetDiv.scrollIntoView({ behavior: "smooth" });
 
     // loader.style.display = "none"
     createUnSolvedProblems();
@@ -177,19 +179,16 @@ async function handleSubmit(e) {
     drawLanguageChart();
     drawTagsChart();
     drawRatingChart();
-    drawLevelsChart()
+    drawLevelsChart();
     drawContestStatsTable();
     drawHeatMap();
-
-
   } catch (err) {
     // loader.style.display = "none"
     console.log(err);
-    showError()
-    hideLoader()
+    showError();
+    hideLoader();
   }
 }
-
 
 function drawContestStatsTable() {
   console.log("Running", attempts);
@@ -336,7 +335,6 @@ function drawLanguageChart() {
     langData.push([lang, language[lang]]);
   }
 
-
   language = new google.visualization.arrayToDataTable(langData);
 
   const languageChartOptions = {
@@ -354,40 +352,40 @@ function drawLanguageChart() {
 }
 
 function drawTagsChart() {
-  console.log("tags", tags)
+  console.log("tags", tags);
 
   let tagDiv = document.getElementById("tags");
 
   let tagTable = [];
   for (let tag in tags) {
-    tagTable.push([tag + ': ' + tags[tag], tags[tag]]);
+    tagTable.push([tag + ": " + tags[tag], tags[tag]]);
   }
   tagTable.sort(function (a, b) {
     return b[1] - a[1];
   });
   tags = new google.visualization.DataTable();
-  tags.addColumn('string', 'Tag');
-  tags.addColumn('number', 'solved');
+  tags.addColumn("string", "Tag");
+  tags.addColumn("number", "solved");
   tags.addRows(tagTable);
   var tagOptions = {
     width: Math.max(tagDiv.getBoundingClientRect().width, 500),
     height: 300,
-    chartArea: { width: '80%', height: '70%' },
-    title: 'Tags of ' + username,
-    pieSliceText: 'none',
+    chartArea: { width: "80%", height: "70%" },
+    title: "Tags of " + username,
+    pieSliceText: "none",
     legend: {
-      position: 'right',
-      alignment: 'center',
+      position: "right",
+      alignment: "center",
       textStyle: {
         fontSize: 12,
-        fontName: 'monospace'
-      }
+        fontName: "monospace",
+      },
     },
     pieHole: 0.5,
     tooltip: {
-      text: 'percentage'
+      text: "percentage",
     },
-    fontName: 'monospace',
+    fontName: "monospace",
   };
   var tagChart = new google.visualization.PieChart(tagDiv);
   tagChart.draw(tags, tagOptions);
@@ -397,7 +395,7 @@ function drawRatingChart() {
   const ratingDiv = document.querySelector(".ratingchart-div");
   const ratingTable = [];
 
-  console.log("ratings", ratings)
+  console.log("ratings", ratings);
 
   for (let rating in ratings) {
     ratingTable.push([rating, ratings[rating]]);
@@ -420,20 +418,18 @@ function drawRatingChart() {
 }
 
 function drawLevelsChart() {
-
   const levelsDiv = document.querySelector(".levelschart-dev");
 
-  let levels = {}
-  const levelsTable = []
+  let levels = {};
+  const levelsTable = [];
   for (let i of solved.values()) {
-    const level = i.split("-").at(-1)[0]
+    const level = i.split("-").at(-1)[0];
     if (levels[level] === undefined) {
       levels[level] = 1;
     } else {
       levels[level] += 1;
     }
   }
-
 
   for (let level in levels) {
     levelsTable.push([level, levels[level]]);
@@ -454,8 +450,7 @@ function drawLevelsChart() {
   const levelChart = new google.visualization.ColumnChart(levelsDiv);
   levelChart.draw(levels, levelChartOptions);
 
-
-  console.log("solved", levels)
+  console.log("solved", levels);
 }
 
 function drawHeatMap() {
@@ -577,21 +572,18 @@ function hideLoader() {
 }
 
 function showContent() {
-  
-  const content = document.getElementById("content")
-  content.classList.remove("d-none")
-
+  const content = document.getElementById("content");
+  content.classList.remove("d-none");
 }
 
 function hideContent() {
-  const content = document.getElementById("content")
-  content.classList.add("d-none")
+  const content = document.getElementById("content");
+  content.classList.add("d-none");
 }
 
-
 function showError() {
-  const content = document.getElementById("content")
-  content.classList.remove("d-none")
+  const content = document.getElementById("content");
+  content.classList.remove("d-none");
   content.innerHTML = `
   <div class="alert alert-danger d-flex align-items-center" role="alert">
   <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
@@ -599,5 +591,5 @@ function showError() {
     Something went wrong!
   </div>
 </div>
-  `
+  `;
 }
