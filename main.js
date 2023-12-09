@@ -22,6 +22,7 @@ let years = 0;
 async function handleSubmit(e) {
   try {
     e.preventDefault();
+    removeError()
     const inputBox = document.getElementById("username-input");
     username = inputBox.value;
     if (username === "") {
@@ -30,6 +31,7 @@ async function handleSubmit(e) {
     }
     showLoader();
     hideContent();
+
 
 
 
@@ -55,12 +57,22 @@ async function handleSubmit(e) {
       await fetch(`${api_url}user.status?handle=${username}`),
       await fetch(`${api_url}user.rating?handle=${username}`),
     ]);
-    response = await response.json();
-    response2 = await response2.json();
+
+    if (response.ok) {
+      response = await response.json();
+    } else {
+      throw Error("Something went wrong")
+    }
+    if (response2.ok) {
+      response2 = await response2.json();
+    } else {
+      throw Error("Something went wrong")
+    }
     console.log("response2", response2);
     console.log(response);
 
-    createUserContestStatsTable(response2);
+    showContent();
+
 
     // LOOPING OVER THE SUBMISSIONS
     for (let i = 0; i < response.result.length; i++) {
@@ -168,10 +180,11 @@ async function handleSubmit(e) {
     console.log(language);
     // console.log("heatmap => ", heatmap)
     hideLoader();
-    showContent();
+
 
     const targetDiv = document.querySelector("#lang-verd");
-    targetDiv.scrollIntoView({ behavior: "smooth" });
+    if (targetDiv)
+      targetDiv.scrollIntoView({ behavior: "smooth" });
 
     // loader.style.display = "none"
     createUnSolvedProblems();
@@ -182,6 +195,7 @@ async function handleSubmit(e) {
     drawLevelsChart();
     drawContestStatsTable();
     drawHeatMap();
+    createUserContestStatsTable(response2);
   } catch (err) {
     // loader.style.display = "none"
     console.log(err);
@@ -505,8 +519,8 @@ function createUnSolvedProblems() {
   }
 
   let unsolvedProblemsDiv = document.getElementById("unsolved-problems");
-
-  unsolvedProblemsDiv.innerHTML = unsolved;
+  if (unsolvedProblemsDiv)
+    unsolvedProblemsDiv.innerHTML = unsolved;
 }
 
 function createUserContestStatsTable(response2) {
@@ -582,14 +596,11 @@ function hideContent() {
 }
 
 function showError() {
-  const content = document.getElementById("content");
-  content.classList.remove("d-none");
-  content.innerHTML = `
-  <div class="alert alert-danger d-flex align-items-center" role="alert">
-  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-  <div>
-    Something went wrong!
-  </div>
-</div>
-  `;
+  const errorBox = document.getElementById("error");
+  errorBox.classList.remove("d-none");
+}
+
+function removeError() {
+  const errorBox = document.getElementById("error");
+  errorBox.classList.add("d-none");
 }
