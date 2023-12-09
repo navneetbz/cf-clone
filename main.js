@@ -31,6 +31,7 @@ async function handleSubmit(e) {
     language = {};
     ratings = {};
     heatmap = {};
+    tags = {}
     tried = new Set();
     solved = new Set();
     attempts = {};
